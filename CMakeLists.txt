@@ -14,3 +14,6 @@ target_link_libraries(create_csr PRIVATE ${LIBCRYPTO_LIBRARIES})
 
 add_executable(sign_csr src/sign_csr.cpp)
 target_link_libraries(sign_csr PRIVATE ${LIBCRYPTO_LIBRARIES})
+
+add_executable(create_crl src/create_crl.cpp)
+target_link_libraries(create_crl PRIVATE ${LIBCRYPTO_LIBRARIES})
