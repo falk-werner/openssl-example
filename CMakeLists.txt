@@ -20,3 +20,6 @@ target_link_libraries(create_crl PRIVATE ${LIBCRYPTO_LIBRARIES})
 
 add_executable(verify_cert src/verify_cert.cpp)
 target_link_libraries(verify_cert PRIVATE ${LIBCRYPTO_LIBRARIES})
+
+add_executable(cms_sign src/cms_sign.cpp)
+target_link_libraries(cms_sign PRIVATE ${LIBCRYPTO_LIBRARIES})

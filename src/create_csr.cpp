@@ -134,7 +134,7 @@ void create_csr(
 
     STACK_OF(X509_EXTENSION) * extensions = sk_X509_EXTENSION_new(nullptr);
     add_extension(extensions, req, NID_basic_constraints, "critical,CA:TRUE");
-    add_extension(extensions, req, NID_key_usage, "critical,keyCertSign,cRLSign");
+    add_extension(extensions, req, NID_key_usage, "critical,keyCertSign,cRLSign,digitalSignature");
     add_extension(extensions, req, NID_subject_key_identifier, "hash");
 
     X509_REQ_add_extensions(req, extensions);
