@@ -1,0 +1,38 @@
+@startuml
+
+class root_ca {
+    +root_ca.pem: Certiificate
+    -root_ca.key: PrivateKey
+}
+
+class signing_ca {
+    +signing_ca.pem: Certiificate
+    -signing_ca.key: PrivateKey
+    +signing_ca.crl: CertificateRevokationList
+    +signing_ca.csr: CertificateSigningRequest
+}
+
+class alice {
+    +alice.pem: Certificate
+    -alice.key: PrivateKey
+}
+
+class bob {
+    +bob.pem: Certificate
+    -bob:key: PrivateKey
+}
+
+class charlie {
+    +charlie.pem: Certificate
+    -charlie.key: PrivateKey
+}
+
+root_ca <-- signing_ca
+signing_ca <-- alice
+signing_ca <-- bob
+signing_ca <-- charlie
+
+note right of root_ca: self signed
+note bottom of charlie: revoked
+
+@enduml

@@ -1,4 +1,5 @@
 /build/
+/test-pki/
 *.key
 *.pem
 *.csr
