@@ -186,7 +186,7 @@ void create_crl(
 {
     X509_CRL * crl = X509_CRL_new();
     X509_CRL_set_version(crl, X509_CRL_VERSION_2);
-    X509_CRL_set_issuer_name(crl, X509_get_issuer_name(issuer_cert));
+    X509_CRL_set_issuer_name(crl, X509_get_subject_name(issuer_cert));
 
     ASN1_TIME * lastUpdate = ASN1_TIME_new();
     X509_gmtime_adj(lastUpdate, 0);
