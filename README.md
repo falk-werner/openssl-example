@@ -19,7 +19,7 @@ cmake --build build
 - [create a certificate revokation list (CRL)](doc/create_crl.md)
 - [verify a certificate](doc/verify_cert.md)
 - [create a digital signature using cryptographic message syntax (CMS)](doc/cms_sign.md)
-- [verify a CMS signature](doc/cms_verfy.md)
+- [verify a CMS signature](doc/cms_verify.md)
 
 _Note:_ Some of the examples make use of a [test PKI](doc/test_pki.md)
 
