@@ -1,3 +1,5 @@
+[![Build](https://github.com/falk-werner/openssl-example/actions/workflows/build.yml/badge.svg)](https://github.com/falk-werner/openssl-example/actions/workflows/build.yml)
+
 # openssl-example
 
 This repository contains examples to show how to use the OpenSSL C API.
