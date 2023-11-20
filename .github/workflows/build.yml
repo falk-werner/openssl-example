@@ -25,3 +25,11 @@ jobs:
       - name: Build
         run: |
           cmake --build build
+
+      - name: Test sha256
+        run: |
+          valgrind --error-exitcode=42 --leak-check=full ./build/sha256 CMakeLists.txt
+      
+      - name: Test create_test_pki
+        run: |
+          valgrind --error-exitcode=42 --leak-check=full ./build/create_test_pki
