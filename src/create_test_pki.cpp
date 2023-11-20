@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Unlicense
+
 #include <openssl/evp.h>
 #include <openssl/x509.h>
 #include <openssl/pem.h>
@@ -233,7 +235,7 @@ int main(int argc, char* argv[])
 {
     (void) argc;
     (void) argv;
-    
+
     path const base_path("test-pki");
     create_dirs(base_path);
     

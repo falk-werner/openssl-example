@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Unlicense
+
 #include <openssl/evp.h>
 #include <cstdio>
 #include <string>
