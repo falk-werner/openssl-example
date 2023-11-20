@@ -6,6 +6,9 @@ set(CMAKE_CXX_STANDARD 17)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(LIBCRYPTO REQUIRED libcrypto>3.0)
 
+add_executable(sha256 src/sha256.cpp)
+target_link_libraries(sha256 PRIVATE ${LIBCRYPTO_LIBRARIES})
+
 add_executable(self_signed src/self_signed.cpp)
 target_link_libraries(self_signed PRIVATE ${LIBCRYPTO_LIBRARIES})
 
