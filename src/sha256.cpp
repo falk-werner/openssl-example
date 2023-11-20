@@ -9,7 +9,7 @@ int main(int argc, char* argv[])
 
     if (argc > 1)
     {
-        for(size_t i = 1; i < argc; i++)
+        for(int i = 1; i < argc; i++)
         {
             char const * filename = argv[i];
 

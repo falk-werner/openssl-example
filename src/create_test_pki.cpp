@@ -231,6 +231,9 @@ void create_crl(
 
 int main(int argc, char* argv[])
 {
+    (void) argc;
+    (void) argv;
+    
     path const base_path("test-pki");
     create_dirs(base_path);
     
