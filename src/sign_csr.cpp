@@ -165,7 +165,7 @@ void sign_csr(
     X509_set_pubkey(cert, X509_REQ_get0_pubkey(csr));
 
     X509_set_subject_name(cert, X509_REQ_get_subject_name(csr));
-    X509_set_issuer_name(cert, X509_get_issuer_name(issuer_cert));
+    X509_set_issuer_name(cert, X509_get_subject_name(issuer_cert));
 
     STACK_OF(X509_EXTENSION) * extensions = X509_REQ_get_extensions(csr);
     X509_EXTENSION * extension = sk_X509_EXTENSION_pop(extensions);
