@@ -33,3 +33,7 @@ jobs:
       - name: Test create_test_pki
         run: |
           valgrind --error-exitcode=42 --leak-check=full ./build/create_test_pki
+
+      - name: Test self-signed
+        run: |
+          valgrind --error-exitcode=42 --leak-check=full ./build/self_signed
