@@ -152,6 +152,7 @@ void cms_verify(
         if (nullptr != trusted_cert)
         {
             X509_STORE_add_cert(store, trusted_cert);
+            X509_free(trusted_cert);
         }
     }
 
@@ -170,6 +171,7 @@ void cms_verify(
             if (nullptr != crl)
             {
                 X509_STORE_add_crl(store, crl);
+                X509_CRL_free(crl);
             }
         }
 
