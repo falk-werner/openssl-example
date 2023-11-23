@@ -4,3 +4,5 @@
 *.pem
 *.csr
 *.crl
+*.sig
+data
