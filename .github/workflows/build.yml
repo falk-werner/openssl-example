@@ -37,3 +37,14 @@ jobs:
       - name: Test self-signed
         run: |
           valgrind --error-exitcode=42 --leak-check=full ./build/self_signed
+
+      - name: Test create CSR
+        run: |
+          valgrind --error-exitcode=42 --leak-check=full ./build/create_csr \
+            -f donny.csr -k donny.key -c Donny
+
+      - name: Test sign CSR
+        run: |
+          valgrind --error-exitcode=42 --leak-check=full  ./build/sign_csr \
+            -f donny.pem -c donny.csr -i ./test-pki/signing_ca/signing_ca.pem  \
+            -i ./test-pki/signing_ca/signing_ca.key 
