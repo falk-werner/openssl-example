@@ -46,5 +46,33 @@ jobs:
       - name: Test sign CSR
         run: |
           valgrind --error-exitcode=42 --leak-check=full  ./build/sign_csr \
-            -f donny.pem -c donny.csr -i ./test-pki/signing_ca/signing_ca.pem  \
-            -i ./test-pki/signing_ca/signing_ca.key 
+            -f donny.pem -c donny.csr \
+            -i ./test-pki/signing_ca/signing_ca.pem  \
+            -k ./test-pki/signing_ca/signing_ca.key 
+
+      - name: Test create CRL
+        run: |
+          valgrind --error-exitcode=42 --leak-check=full  ./build/create_crl \
+            -f donny.crl -c donny.pem \
+            -i ./test-pki/signing_ca/signing_ca.pem  \
+            -k ./test-pki/signing_ca/signing_ca.key 
+
+      - name: Test verify certificate
+        run: |
+          valgrind --error-exitcode=42 --leak-check=full  ./build/verify_cert \
+            -t ./test-pki/root_ca/root_ca.pem \
+            -u ./test-pki/signing_ca/signing_ca.pem  \
+            -c donny.pem            
+
+      - name: Test sign using CMS
+        run: |
+          echo 42 > data
+          valgrind --error-exitcode=42 --leak-check=full  ./build/cms_sign \
+            -f data -s donny.pem -k donny.key
+          
+      - name: Test verify using CMS
+        run: |
+          valgrind --error-exitcode=42 --leak-check=full  ./build/cms_verify \
+            -f data -t ./test-pki/root_ca/root_ca.pem \
+            -t ./test-pki/signing_ca/signing_ca.pem 
+  
