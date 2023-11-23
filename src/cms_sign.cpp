@@ -184,6 +184,7 @@ void cms_sign(
         std::cout << "error: failed to write signature" << std::endl;
     }
 
+    CMS_ContentInfo_free(info);
     BIO_free(bio);
 }
 
