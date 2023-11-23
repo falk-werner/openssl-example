@@ -172,8 +172,10 @@ void sign_csr(
     while (nullptr != extension)
     {
         X509_add_ext(cert, extension, -1);
+        X509_EXTENSION_free(extension);
         extension = sk_X509_EXTENSION_pop(extensions);
     }
+    sk_X509_EXTENSION_free(extensions);
 
     X509_sign(cert, key, EVP_sha256());
     file = fopen(filename.c_str(), "wb");
