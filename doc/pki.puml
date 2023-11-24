@@ -9,7 +9,6 @@ class signing_ca {
     +signing_ca.pem: Certiificate
     -signing_ca.key: PrivateKey
     +signing_ca.crl: CertificateRevokationList
-    +signing_ca.csr: CertificateSigningRequest
 }
 
 class alice {
@@ -27,10 +26,15 @@ class charlie {
     -charlie.key: PrivateKey
 }
 
+class donny {
+    +donny.csr: CertificateSigningRequest
+}
+
 root_ca <-- signing_ca
 signing_ca <-- alice
 signing_ca <-- bob
 signing_ca <-- charlie
+signing_ca <--[hidden] donny
 
 note right of root_ca: self signed
 note bottom of charlie: revoked
