@@ -180,7 +180,7 @@ executed.
 X509_sign(cert, key, EVP_sha256());
 ```
 
-One every field of the `X509` struct is set, the certificate can be signed.
+Once every field of the `X509` struct is set, the certificate can be signed.
 Every certificate is a signed using the private key of the issuer. Since
 this is a self-signed certificate, the previously created private key
 is used.
