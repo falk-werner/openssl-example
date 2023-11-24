@@ -213,7 +213,7 @@ void create_csr(
 
     X509_REQ_sign(csr, key.get(), EVP_sha256());
 
-    path const & filename = base_path / (common_name + ".pem");
+    path const & filename = base_path / (common_name + ".csr");
     FILE * file = fopen(filename.c_str(), "wb");
     if (file != nullptr)
     {

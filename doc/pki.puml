@@ -28,6 +28,7 @@ class charlie {
 
 class donny {
     +donny.csr: CertificateSigningRequest
+    -donny.key: PrivateKey
 }
 
 root_ca <-- signing_ca
