@@ -12,6 +12,17 @@ cmake --build build
 ./build/create_test_pki
 ```
 
+## Glossary
+
+| Abbreviation | Description |
+| ------------ | ----------- |
+| [X.509](https://en.wikipedia.org/wiki/X.509) |  A standard defining the format of public key certificates |
+| [CA](https://en.wikipedia.org/wiki/Certificate_authority) | **C**ertificate **A**uthority |
+| [CSR](https://en.wikipedia.org/wiki/Certificate_signing_request) | **C**ertificate **S**igning **R**equest |
+| [CRL](https://en.wikipedia.org/wiki/Certificate_revocation_list) | **C**ertififcate **R**evocation **L**ist |
+| [CMS](https://en.wikipedia.org/wiki/Cryptographic_Message_Syntax) | **C**ryptographic **M**essage **S**yntax |
+| [PKI](https://en.wikipedia.org/wiki/Public_key_infrastructure) | **P**ublic **K**ey **I**nfrastructure |
+
 ## Examples
 
 - [compute SHA256 checksumn](doc/sha256.md)
@@ -31,5 +42,5 @@ cmake --build build
 
 ## Depedencies
 
-- OpenSSL>3.0
+- [OpenSSL](https://www.openssl.org/)>3.0
 
