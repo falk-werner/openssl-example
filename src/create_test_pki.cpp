@@ -30,6 +30,7 @@ void create_dirs(path const & base_path)
     create_directory(base_path / "alice");
     create_directory(base_path / "bob");
     create_directory(base_path / "charlie");
+    create_directory(base_path / "donny");
 }
 
 using X509_ptr = std::unique_ptr<X509, void(*)(X509*)>;
@@ -180,6 +181,49 @@ void create_cert(
     X509_free(cert);
 }
 
+void add_req_extension(STACK_OF(X509_EXTENSION) * stack, X509_REQ * req, int id, char const * value)
+{
+    X509V3_CTX ctx;
+    X509V3_set_ctx_nodb(&ctx);
+    X509V3_set_ctx(&ctx, nullptr, nullptr, req, nullptr, 0);
+    X509_EXTENSION * extension = X509V3_EXT_conf_nid(nullptr, &ctx, id, value);
+    sk_X509_EXTENSION_push(stack, extension);
+}
+
+void create_csr(
+    std::string common_name,
+    path base_path)
+{
+    EVP_PKEY_ptr key = create_key(base_path / (common_name + ".key"));
+
+    X509_REQ * csr = X509_REQ_new();
+    X509_REQ_set_version(csr, X509_REQ_VERSION_1);
+    X509_REQ_set_pubkey(csr, key.get());
+
+    X509_NAME_ptr subject = create_name(common_name);
+    X509_REQ_set_subject_name(csr, subject.get());
+
+    STACK_OF(X509_EXTENSION) * extensions = sk_X509_EXTENSION_new(nullptr);
+    add_req_extension(extensions, csr, NID_basic_constraints, "critical,CA:TRUE");
+    add_req_extension(extensions, csr, NID_key_usage, "critical,keyCertSign,cRLSign,digitalSignature");
+    add_req_extension(extensions, csr, NID_subject_key_identifier, "hash");
+
+    X509_REQ_add_extensions(csr, extensions);
+    sk_X509_EXTENSION_pop_free(extensions, X509_EXTENSION_free);
+
+    X509_REQ_sign(csr, key.get(), EVP_sha256());
+
+    path const & filename = base_path / (common_name + ".pem");
+    FILE * file = fopen(filename.c_str(), "wb");
+    if (file != nullptr)
+    {
+        PEM_write_X509_REQ(file, csr);
+        fclose(file);
+    }
+
+    X509_REQ_free(csr);
+}
+
 void create_crl(
     path filename,
     std::vector<long> serials,
@@ -251,6 +295,8 @@ int main(int argc, char* argv[])
     create_cert("charlie", base_path / "charlie", 3, signing_ca.get(), signing_key.get());
 
     create_crl(base_path / "signing_ca" / "signing_ca.crl", {3}, signing_ca.get(), signing_key.get());
+
+    create_csr("donny", base_path / "donny");
 
     return EXIT_SUCCESS;
 }
