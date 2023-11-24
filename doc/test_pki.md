@@ -22,7 +22,7 @@ This will create or update the PKI in `test-pki` directory.
 - alice, bob, charlie:  
   Each directory contains a certificate used to create digital signatures.
   Note that the certificate of `charlie` is revoked.
-- donny:
+- donny:  
   Contains a certificate signing request.
 
 ## Verify PKI using openssl
