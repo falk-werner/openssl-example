@@ -23,7 +23,11 @@ cmake --build build
 - [create a digital signature using cryptographic message syntax (CMS)](doc/cms_sign.md)
 - [verify a CMS signature](doc/cms_verify.md)
 
-_Note:_ Some of the examples make use of a [test PKI](doc/test_pki.md)
+### Remarks
+
+- Some of the examples make use of a [test PKI](doc/test_pki.md).
+- The purpose of this repository is to give an overview about OpenSSL's C API.
+  Therefore, there is almost no error handling contained in the examples.
 
 ## Depedencies
 
