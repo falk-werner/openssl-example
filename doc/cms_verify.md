@@ -13,7 +13,7 @@ In order verify a CMS signature the following artifacts are needed:
 - optionally any certificate recocation lists
 
 The prerequisites can be created using the [test PKI](test_pki.md)
-and the [cms_sign)[cms_sign.md] example.
+and the [cms_sign](cms_sign.md) example.
 
 ## Verification using OpenSSL command line tool
 
