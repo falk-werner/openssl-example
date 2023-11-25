@@ -1,6 +1,6 @@
 # Create Certificate Revocation List (CRL)
 
-- Source: [create_crl.cpp](src/create_crl.cpp)
+- Source: [create_crl.cpp](../src/create_crl.cpp)
 
 ## Prerequisites
 
