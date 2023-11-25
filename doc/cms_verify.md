@@ -1,6 +1,6 @@
 # Verify signature using CMS
 
-- Source: [cms_verify.cpp](../src/cms_verify.ccpp)
+- Source: [cms_verify.cpp](../src/cms_verify.cpp)
 
 ## Prerequisites
 
