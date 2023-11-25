@@ -9,6 +9,8 @@ class signing_ca {
     +signing_ca.pem: Certiificate
     -signing_ca.key: PrivateKey
     +signing_ca.crl: CertificateRevokationList
+    +ca.conf: CA configuration
+    +index.txt: certificate index
 }
 
 class alice {
