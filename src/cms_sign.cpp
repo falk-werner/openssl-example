@@ -27,9 +27,10 @@ Usage:
     cms_sign [-f <filename>] [-s <cfilename>] [-k <filename>]
 
 Options:
-    -f, --filename <filename>  - file to sign
-    -s, --signer <filename>    - signer certificate
-    -k, --keyfile <filename>   - signer key
+    -f, --filename <filename>   - file to sign
+    -s, --signer <filename>     - signer certificate
+    -k, --keyfile <filename>    - signer key
+    -c, --certificate <filename - additional certificate
 )";
 }
 
@@ -44,6 +45,7 @@ struct context
             {"filename", required_argument, nullptr, 'f'},
             {"signer", required_argument, nullptr, 's'},
             {"keyfile", required_argument, nullptr, 'k'},
+            {"certificate", required_argument, nullptr, 'c'},
             {"help", no_argument, nullptr, 'h'},
             {nullptr, 0, nullptr, 0}
         };
@@ -55,7 +57,7 @@ struct context
         while (!finished)
         {
             int option_index = 0;
-            int const c = getopt_long(argc, argv, "f:s:k:h", long_opts, &option_index);
+            int const c = getopt_long(argc, argv, "f:s:k:c:h", long_opts, &option_index);
             switch (c)
             {
                 case -1:
@@ -69,6 +71,9 @@ struct context
                     break;
                 case 'k':
                     signer_keys.push_back(optarg);
+                    break;
+                case 'c':
+                    additional_certs.push_back(optarg);
                     break;
                 case 'h':
                     show_help = true;
@@ -117,12 +122,14 @@ struct context
     std::string filename;
     std::vector<std::string> signers;
     std::vector<std::string> signer_keys;
+    std::vector<std::string> additional_certs;
 };
 
 void cms_sign(
     std::string const & filename,
     std::vector<std::string> const & signers,
-    std::vector<std::string> const & signer_keys
+    std::vector<std::string> const & signer_keys,
+    std::vector<std::string> const & additional_certs
 )
 {
     FILE * file;
@@ -171,6 +178,21 @@ void cms_sign(
         X509_free(additional_signer);
     }
 
+    for(auto const & cerfile: additional_certs)
+    {
+        X509 * additional_cert = nullptr;
+        FILE * file = fopen(cerfile.c_str(), "rb");
+        if (nullptr != file)
+        {
+            PEM_read_X509(file, &additional_cert, nullptr, nullptr);
+            fclose(file);
+        }
+        if (nullptr != additional_cert)
+        {
+            CMS_add0_cert(info, additional_cert);
+        }
+    }
+
     CMS_final(info, bio, nullptr, flags);
 
     file = fopen((filename + ".sig").c_str(), "wb");
@@ -196,7 +218,7 @@ int main(int argc, char * argv[])
 
     if (!ctx.show_help)
     {
-        cms_sign(ctx.filename, ctx.signers, ctx.signer_keys);       
+        cms_sign(ctx.filename, ctx.signers, ctx.signer_keys, ctx.additional_certs);       
     }
     else
     {
