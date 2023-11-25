@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <fstream>
 #include <filesystem>
 #include <memory>
 
@@ -273,6 +274,50 @@ void create_crl(
     X509_CRL_free(crl);
 }
 
+void create_ca_conf(path const & base_dir)
+{
+    std::fstream conf;
+    conf.open((base_dir / "ca.conf").c_str(), std::fstream::out);
+    conf << R"([ ca ]
+default_ca      = CA_default            # The default ca section
+ 
+[ CA_default ]
+
+dir            = ./test-pki/signing_ca # top dir
+database       = $dir/index.txt        # index file.
+new_certs_dir  = $dir/newcerts         # new certs dir
+
+certificate    = $dir/signing.pem      # The CA cert
+serial         = $dir/serial           # serial no file
+private_key    = $dir/signing.key      # CA private key
+RANDFILE       = $dir/signing.rand     # random number file
+
+default_days   = 365                   # how long to certify for
+default_crl_days= 30                   # how long before next CRL
+default_md     = sha256                # md to use
+
+policy         = policy_any            # default policy
+email_in_dn    = no                    # Don't add the email into cert DN
+
+name_opt       = ca_default            # Subject name display option
+cert_opt       = ca_default            # Certificate display option
+copy_extensions = none                 # Don't copy extensions from request
+
+[ policy_any ]
+countryName            = supplied
+stateOrProvinceName    = optional
+organizationName       = optional
+organizationalUnitName = optional
+commonName             = supplied
+emailAddress           = optional
+)";
+    conf.close();
+
+    std::fstream index;
+    index.open((base_dir / "index.txt").c_str(), std::fstream::out);
+    index.close();
+}
+
 }
 
 int main(int argc, char* argv[])
@@ -295,6 +340,7 @@ int main(int argc, char* argv[])
     create_cert("charlie", base_path / "charlie", 3, signing_ca.get(), signing_key.get());
 
     create_crl(base_path / "signing_ca" / "signing_ca.crl", {3}, signing_ca.get(), signing_key.get());
+    create_ca_conf(base_path / "signing_ca");
 
     create_csr("donny", base_path / "donny");
 
