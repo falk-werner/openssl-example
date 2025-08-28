@@ -3,6 +3,7 @@
 #include <openssl/evp.h>
 #include <openssl/x509.h>
 #include <openssl/pem.h>
+#include <openssl/x509v3.h>
 
 #include <cstdlib>
 #include <cstdio>
